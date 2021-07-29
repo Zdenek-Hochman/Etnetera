@@ -1,0 +1,22 @@
+// $GrayColor: #a1a1a1;
+// $BlueColor: #0459ab;
+// $BlackColor: #1a1a1a;
+$OrangeColor: #e84e0e;
+$OpenSanStyle: (
+    "Bold",
+    "BoldItalic",
+    "ExtraBold",
+    "ExtraBoldItalic",
+    "Italic",
+    "Light",
+    "LightItalic",
+    "Regular",
+    "SemiBold",
+    "SemiBoldItalic"
+);
+$MyraidProStyle: (
+    "Regular",
+    "SemiBold"
+);
+@include font-face(OpenSans, OpenSans, $OpenSanStyle);
+@include font-face(MyraidPro, MyraidPro, $MyraidProStyle);

@@ -1,0 +1,1021 @@
+@import "misc/reset";
+@import "misc/mixin";
+@import "misc/basic";
+
+p {
+    margin: 0;
+}
+
+.bolder {
+    font-family: "OpenSansBold";
+}
+
+.orange {
+    color: $OrangeColor;
+}
+
+.tooltip {
+    border-bottom: 1px dashed $OrangeColor;
+    cursor: pointer;
+    padding-bottom: 3px;
+    position: relative;
+    display: inline-block;
+
+    &__info {
+        width: 100px;
+        height: 20px;
+        background: #464646;
+        color: white;
+        position: absolute;
+        top: -20px;
+        @include Font("OpenSansBold", normal, .875rem, null);
+        line-height: 1.4rem;
+        text-align: center;
+        border-radius: 4px;
+        margin: 0;
+        padding: 0;
+
+        &::after {
+            @include Pseudo("", table, null, null);
+            left: calc(50% - 6px);
+            top: 20px;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid #464646;
+            border-left: 6px solid transparent;
+            position: absolute;
+            transform: rotate(180deg);
+        }
+    }
+
+    &::before {}
+}
+
+html {
+    font-size: 16px;
+    @include MediaQuery("Tablet-Wide", max) {
+        font-size: 13px;
+    }
+}
+
+body {
+    position: relative;
+    margin: 0 auto;
+    background: #ebe8e8;
+}
+
+.holder {
+    margin: 0 auto !important;
+    width: 70%;
+    @include MediaQuery("Desktop", max) {
+        width: 80%;
+    }
+
+    &--graph {
+        width: 39%;
+        @include MediaQuery("Tablet-Small", max) {
+            width: 95vw;
+        }
+    }
+}
+
+.news-holder {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 76px;
+    background-color: $OrangeColor;
+}
+
+.header {
+    height: 83px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+
+    .image-holder {
+        display: flex;
+        height: 100%;
+        width: 150px;
+        @include MediaQuery("Tablet-Wide", max) {
+            width: 110px;
+        }
+        @include MediaQuery("Tablet", max) {
+            width: 150px;
+        }
+
+        &__logo {
+            @include Background("../img/logo.png", ("center", "left"), null, no-repeat);
+            width: 100%;
+            margin-left: 45px;
+            background-size: contain;
+            @include MediaQuery("Tablet-Wide", max) {
+                margin-left: 20px;
+            }
+        }
+    }
+}
+
+.hamburger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    @include MediaQuery("Tablet", min) {
+        display: none;
+    }
+
+    &.active > &__line {
+        background: transparent;
+
+        &::before {
+            top: 0;
+            transform: rotate(45deg);
+            @include Transition((top:0.4s, transform: 0.3s), null, null, linear);
+        }
+
+        &::after {
+            top: -3px;
+            transform: rotate(-45deg);
+            @include Transition((top:0.4s, transform: 0.3s), null, null, linear);
+        }
+    }
+
+    &__line {
+        width: 100%;
+        height: 2px;
+        background: black;
+        display: block;
+
+        &::after,
+        &::before {
+            @include Pseudo("", table, 100%, 2px);
+            background: black;
+            position: relative;
+            @include Transition((top:0.4s, transform: 0.3s), null, null, linear);
+        }
+
+        &::after {
+            top: -11px;
+        }
+
+        &::before {
+            top: 10px;
+        }
+    }
+}
+//
+
+.navigation {
+    &--mobile {
+        @include MediaQuery("Tablet", max) {
+            width: 100%;
+            height: 0;
+            position: fixed;
+            top: 0;
+            background-color: rgba(255,255,255,1);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            @include Transition(height, .3s, null, ease-out);
+        }
+    }
+}
+
+.list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    &--navigation-mobile {
+        flex-direction: column;
+        align-items: center;
+        @include MediaQuery("Tablet", min) {
+            display: none;
+        }
+    }
+
+    &--navigation {
+        margin-right: 57px;
+        @include MediaQuery("Tablet-Wide", max) {
+            margin-right: 20px;
+        }
+        @include MediaQuery("Tablet", max) {
+            display: none;
+        }
+    }
+
+    &--news {
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        @include MediaQuery("Tablet-Small", max) {
+            justify-content: space-evenly;
+        }
+        @include MediaQuery("Phablet", max) {
+            flex-direction: column;
+        }
+    }
+
+    &--knowledge {
+        flex-direction: column;
+        margin: 36px 50px 0;
+        @include MediaQuery("Tablet-Small", max) {
+            margin: 10px 0;
+        }
+    }
+
+    &__listitem {
+        list-style-type: none;
+        @include Font("OpenSansLight", normal, 1.125rem, null);
+
+        &--navigation-mobile {
+            margin: 10px 0;
+            @include Font("OpenSansSemiBold", normal, 1.5rem, null);
+        }
+
+        &--navigation {
+            margin: 0 14px 0 15px;
+            position: relative;
+            cursor: pointer;
+            @include MediaQuery("Tablet", max) {
+                display: none;
+            }
+
+            &:active,
+            &:hover {
+                color: $OrangeColor;
+                @include Transition(color, .3s, null, ease-out);
+
+                &::after {
+                    width: 100%;
+                    left: 0;
+                    @include Transition([width, left], .3s, null, ease-out);
+                }
+            }
+
+            &::after {
+                @include Pseudo("", block, 0%, 1px);
+                background-color: $OrangeColor;
+                position: absolute;
+                margin-top: 5px;
+                left: 50%;
+            }
+        }
+
+        &--news {
+            margin: 0 14px 0 15px;
+            font-size: .938rem;
+            color: white;
+            margin-top: -2px;
+            position: relative;
+
+            &:nth-child(1) {
+                left: -102px;
+                @include MediaQuery("Tablet-Small", max) {
+                    left: unset;
+                }
+                @include MediaQuery("Phablet", max) {
+                    margin: 20px 0 0;
+                }
+            }
+
+            &:nth-child(2) {
+                text-align: center;
+                width: 34%;
+                position: relative;
+                letter-spacing: .3px;
+                line-height: 1.2;
+                margin-left: 8px;
+                margin-right: 0;
+                margin-top: -6px;
+                font-weight: 600;
+                @include MediaQuery("Phablet", max) {
+                    margin: 20px 0 0;
+                    width: initial;
+                }
+            }
+
+            &:nth-child(3) {
+                right: -108px;
+                cursor: pointer;
+                @include MediaQuery("Tablet-Small", max) {
+                    right: unset;
+                }
+                @include MediaQuery("Phablet", max) {
+                    margin: 20px 0;
+                }
+            }
+        }
+
+        &--checked,
+        &--numeric {
+            margin-bottom: 31px;
+            font-size: 1rem;
+            position: relative;
+            @include MediaQuery("Tablet-Small", max) {
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                min-width: 160px;
+                padding-left: 3.5em;
+                text-indent: -2.5em;
+                margin-left: -15px !important;
+            }
+        }
+
+        &--checked {
+            &::before {
+                @include Pseudo("", inline-block, 12px, 25px);
+                transform: rotate(45deg);
+                border-bottom: 4px solid $OrangeColor;
+                border-right: 4px solid $OrangeColor;
+                position: absolute;
+                left: -37px;
+                top: -10px;
+                border-radius: 3px;
+                @include MediaQuery("Tablet-Small", max) {
+                    position: unset;
+                    margin: 0 15px 0 7px;
+                    width: 6px;
+                    height: 15px;
+                }
+            }
+        }
+
+        &--numeric {
+            &::before {
+                @include Pseudo("", inline-block, 12px, 25px);
+                position: absolute;
+                left: -37px;
+                top: -2px;
+                color: $OrangeColor;
+                @include Font("OpenSansRegular", normal, 1.125rem, null);
+                @include MediaQuery("Tablet-Small", max) {
+                    position: unset;
+                    margin: 0 15px 0 7px;
+                    width: 6px;
+                    height: 15px;
+                    display: inline;
+                }
+            }
+        }
+        @include ContentAdd(numeric);
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.carousel-holder {
+    position: relative;
+    height: 457px;
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    @include MediaQuery("Tablet-Wide", max) {
+        height: 300px;
+    }
+    @include MediaQuery("Phablet", max) {
+        height: 500px;
+    }
+    @include MediaQuery("Phone", max) {
+        min-height: 600px;
+    }
+
+    &::before {
+        @include Pseudo("", block, 100%, 100%);
+        @include Background("../img/header.png", ("top", "center"), cover, no-repeat);
+        position: absolute;
+        top: 0;
+        left: 0;
+        filter: grayscale(1);
+        opacity: .18;
+    }
+
+    &__arrow-button {
+        position: absolute;
+        width: 2rem;
+        height: 4rem;
+        display: inline-block;
+        cursor: pointer;
+        top: calc(50% - 2rem);
+
+        &:after,
+        &:before {
+            content: "";
+            position: absolute;
+            background: black;
+            border-radius: .2rem;
+            display: block;
+            left: -5%;
+            height: 4%;
+            width: 116%;
+        }
+
+        &:hover {
+            &:after,
+            &:before {
+                background: $OrangeColor;
+                @include Transition(background, .3s, null, ease-out);
+            }
+        }
+
+        &:before {
+            top: 71%;
+        }
+
+        &:after {
+            bottom: 65%;
+        }
+
+        &--left {
+            left: 82px;
+            @include MediaQuery("Desktop", max) {
+                left: 2.2vw;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+
+        &--right {
+            right: 82px;
+            @include MediaQuery("Desktop", max) {
+                right: 2.2vw;
+            }
+
+            &:before {
+                transform: rotate(-45deg);
+            }
+
+            &:after {
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    &__button {
+        width: 235px;
+        height: 44px;
+        border-radius: 20px;
+        position: absolute;
+        background-color: white;
+        border: 1px solid $OrangeColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        right: 9vw;
+        bottom: 70px;
+        @include MediaQuery("Tablet-Wide", max) {
+            width: 145px;
+            height: 33px;
+            bottom: 40px;
+        }
+        @include MediaQuery("Phablet", max) {
+            left: calc(50% - 145px/2);
+        }
+
+        span {
+            @include Font("OpenSansRegular", normal, 1rem, null);
+            color: $OrangeColor;
+        }
+    }
+
+    .carousel-window {
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        .carousel {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            margin: auto;
+            z-index: 100;
+            transition: transform .5s, opacity .5s, z-index .5s;
+            top: 81px;
+            @include MediaQuery("Phablet", max) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            &.active,
+            &.initial {
+                opacity: 1;
+                position: relative;
+                z-index: 900;
+            }
+
+            &.next,
+            &.prev {
+                z-index: 800;
+            }
+
+            &.prev {
+                transform: translateX(-100%);
+            }
+
+            &.next {
+                transform: translateX(100%);
+            }
+            @include MediaQuery("Tablet-Wide", max) {
+                top: 5vw;
+            }
+
+            &__heading {
+                @include Font("OpenSansSemiBold", normal, 3rem, null);
+                margin: 0;
+                letter-spacing: -1px;
+                word-spacing: 1px;
+                @include MediaQuery("Tablet-Wide", max) {
+                    font-size: 2.8rem;
+                }
+                @include MediaQuery("Phablet", max) {
+                    text-align: center;
+                }
+            }
+
+            &__description {
+                @include Font("MyraidProRegular", normal, 1.25rem, null);
+                margin-top: 64px;
+                width: 71%;
+                word-break: break-word;
+            }
+        }
+    }
+}
+
+.article {
+    &__header {
+        @include Font("OpenSansSemiBold", normal, 2.25rem, null);
+        margin: 42px 0 7px;
+    }
+
+    .text-image {
+        min-height: 216px;
+        display: flex;
+        margin-bottom: 28px;
+        @include MediaQuery("Tablet", max) {
+            flex-direction: column;
+        }
+
+        &__image {
+            background: url("../img/building.png");
+            min-width: 326px;
+            height: auto;
+            background-position: top left;
+            background-repeat: no-repeat;
+            @include MediaQuery("Tablet", max) {
+                height: 53vw;
+                width: 100%;
+                background-size: contain;
+                margin-bottom: 20px;
+                min-width: unset;
+            }
+        }
+
+        &__paragraph {
+            width: 100%;
+            @include Font("OpenSansRegular", normal, .991rem, null);
+            line-height: 1.5;
+            text-align: justify;
+            word-spacing: -2px;
+            margin-left: 20px;
+            @include MediaQuery("Tablet", max) {
+                margin-left: 0;
+            }
+        }
+    }
+
+    &__paragraph {
+        @include Font("OpenSansRegular", normal, .991rem, null);
+
+        &:nth-child(1n) {
+            margin-bottom: 31px;
+        }
+    }
+}
+
+.graph-section {
+    &__header {
+        @include Font("OpenSansSemiBold", normal, 1.313rem, null);
+        margin-top: 40px;
+    }
+}
+
+.graph {
+    position: relative;
+    height: 170px;
+    margin-bottom: 70px;
+    @include MediaQuery("Phone", max) {
+        margin-bottom: 130px;
+    }
+
+    .data-holder {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+
+        .collums {
+            display: flex;
+            align-items: flex-end;
+            min-height: 70px;
+            @include MediaQuery("Tablet-Small", max) {
+                width: 95vw;
+            }
+
+            &__collum {
+                width: 20px;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+
+        .times {
+            margin-top: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            @include MediaQuery("Tablet-Wide", max) {
+                width: 580px;
+                justify-content: space-around;
+            }
+            @include MediaQuery("Tablet-Small", max) {
+                width: 95vw;
+                justify-content: space-around;
+            }
+
+            &__time {
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                margin: 0 1px;
+                @include Font("OpenSansSemiBold", normal, .813rem, null);
+                transform: rotate(180deg);
+                @include MediaQuery("Tablet-Small", max) {
+                    margin: 0 -1.1vw;
+                }
+
+                &:nth-child(2n) {
+                    visibility: hidden;
+                }
+            }
+        }
+    }
+
+    .label-holder {
+        display: flex;
+        justify-content: center;
+        margin-top: 22px;
+
+        .labels {
+            display: flex;
+            @include MediaQuery("Phone", max) {
+                align-items: baseline;
+                flex-direction: column;
+            }
+
+            &__label {
+                @include Font("OpenSansRegular", normal, .813rem, null);
+                margin: 0 22px;
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                @include MediaQuery("Phone", max) {
+                    margin: 10px 0;
+                }
+
+                .labels-color-span {
+                    border-radius: 100%;
+                    min-width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    &__row:first-child {
+        margin-right: 40px;
+        @include MediaQuery("Tablet-Small", max) {
+            margin-right: 0;
+        }
+    }
+    @include MediaQuery("Tablet-Small", max) {
+        grid-template-columns: unset;
+        grid-template-rows: auto auto;
+    }
+}
+
+.knowledge-holder {
+    &__heading {
+        margin: 0 0 27px;
+        @include Font("OpenSansRegular", normal, 2.25rem, null);
+        @include MediaQuery("Tablet-Small", max) {
+            text-align: center;
+        }
+    }
+
+    &__small-text {
+        @include Font("OpenSansRegular", normal, 1rem, null);
+    }
+}
+
+.tiles-holder {
+    background: white;
+    padding-bottom: 64px;
+
+    .tiles {
+        display: flex;
+        justify-content: center;
+        @include MediaQuery("Tablet-Wide", max) {
+            flex-wrap: wrap;
+        }
+
+        &__item:nth-child(2) {
+            background-color: black;
+
+            .tile-info {
+                &__header {
+                    color: white;
+                }
+
+                &__description {
+                    color: white;
+                }
+            }
+
+            .additional-info {
+                &__date {
+                    color: white;
+                }
+            }
+        }
+
+        &__item {
+            box-shadow: 0 0 9px 4px rgb(0 0 0 / 7%);
+            margin: 64px 21px 0;
+            max-width: 304px;
+            position: relative;
+            background-color: white;
+            @include MediaQuery("Tablet-Wide", max) {
+                margin: 64px 21px 0;
+                max-width: 260px;
+            }
+            @include MediaQuery("Tablet-Small", max) {
+                margin: 32px 0;
+            }
+
+            .tile-info {
+                padding: 0 1.2vw;
+                margin-bottom: 50px;
+
+                &__header {
+                    @include Font("OpenSansBold", normal, 2.375rem, null);
+                    text-align: center;
+                    margin: 51px 0 31px;
+                }
+
+                &__description {
+                    @include Font("OpenSansRegular", normal, 1.25rem, null);
+                    text-align: center;
+                }
+            }
+
+            .additional-info {
+                display: flex;
+                position: absolute;
+                bottom: 0;
+                margin-bottom: 20px;
+                width: 100%;
+                justify-content: space-between;
+
+                &__date {
+                    @include Font("MyraidProRegular", normal, .813rem, null);
+                    margin-left: 20px;
+                }
+
+                &__newsletter {
+                    @include Font("MyraidProSemiBold", normal, .813rem, null);
+                    color: $OrangeColor;
+                    margin-right: 20px;
+                    cursor: pointer;
+                }
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+footer {
+    position: relative;
+    background-color: white;
+    min-height: 150px;
+
+    .copyright {
+        display: flex;
+        flex-direction: column;
+
+        &__text {
+            margin: 0;
+            text-align: center;
+            @include Font("OpenSansBold", normal, 1rem, null);
+
+            &:first-child {
+                font-size: .875rem;
+                color: $OrangeColor;
+                margin-bottom: 11px;
+            }
+
+            &:nth-child(2) {
+                margin-bottom: 37px;
+            }
+
+            &:last-child {
+                font-family: "MyraidProRegular";
+                margin-bottom: 38px;
+
+                span {
+                    color: $OrangeColor;
+                }
+            }
+        }
+    }
+
+    .help {
+        background-color: $OrangeColor;
+        border-radius: 100%;
+        width: 44px;
+        height: 44px;
+        position: absolute;
+        bottom: 38px;
+        right: 53px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        @include MediaQuery("Phone", max) {
+            right: calc(50% - 22px);
+            bottom: 0;
+        }
+
+        &__window {
+            display: none;
+            width: 348px;
+            background: white;
+            position: absolute;
+            bottom: 60px;
+            right: -4px;
+            box-shadow: 3px 3px 7px 0 rgb(0 0 0 / 35%);
+            box-sizing: border-box;
+            @include MediaQuery("Phone", max) {
+                right: calc(50% - 80vw/2);
+                width: 80vw;
+            }
+
+            &::after {
+                @include Pseudo("", block, 0, 0);
+                z-index: 0;
+                position: absolute;
+                bottom: -6px;
+                right: 6px;
+                box-sizing: border-box;
+                border: 10px solid #fff;
+                border-color: white;
+                transform-origin: 0 0;
+                box-shadow: 3px 3px 7px 0 rgb(0 0 0 / 35%);
+                transform: rotate(45deg);
+                @include MediaQuery("Phone", max) {
+                    right: calc(50% - 40px/2);
+                }
+            }
+
+            &::before {
+                @include Pseudo("", block, 0, 0);
+                z-index: 10;
+                position: absolute;
+                bottom: -4px;
+                right: 4px;
+                box-sizing: border-box;
+                border: 11px solid #000;
+                border-color: white;
+                transform-origin: 0 0;
+                transform: rotate(45deg);
+                @include MediaQuery("Phone", max) {
+                    right: calc(50% - 40px/2);
+                }
+            }
+
+            .help-holder {
+                padding: 0 29px;
+
+                &__heading {
+                    @include Font("OpenSansBold", normal, 1.5rem, null);
+                }
+
+                &__form {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .form {
+                    margin-bottom: 30px;
+
+                    &__label {
+                        @include Font("OpenSansRegular"¨, normal, .695rem, null);
+                        color: #999999;
+                        margin-bottom: 16px;
+                    }
+
+                    &__input-text {
+                        width: 100%;
+                        height: 47px;
+                        border: 2px solid #999999;
+                        margin-bottom: 27px;
+                    }
+
+                    &__input-button {
+                        width: 236px;
+                        height: 44px;
+                        background-color: $OrangeColor;
+                        color: white;
+                        border-radius: 100px;
+                        @include Font("OpenSansRegular", normal, 1rem, null);
+                        text-align: center;
+                        @include MediaQuery("Phone", max) {
+                            width: 62vw;
+                        }
+                    }
+                }
+
+                &__info {
+                    @include Font("OpenSansRegular", normal, .875rem, null);
+                    color: #999999;
+                    margin-bottom: 47px;
+                }
+            }
+
+            .close-cross {
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: 11px;
+                right: 11px;
+
+                &::after,
+                &::before {
+                    @include Pseudo("", block, 100%, 2px);
+                    background: $OrangeColor;
+                    position: relative;
+                }
+
+                &:after {
+                    transform: rotate(45deg);
+                    top: 8px;
+                    right: -1px;
+                }
+
+                &:before {
+                    transform: rotate(-45deg);
+                    top: 9px;
+                }
+            }
+        }
+    }
+}
